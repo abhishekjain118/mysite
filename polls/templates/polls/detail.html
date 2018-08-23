@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{key_question.id}}</title>
+</head>
+<body>
+<h1>{{key_question.id}}: {{ key_question.question_text }}</h1>
+<ul>
+    {% for choice in key_question.choice_set.all %}
+        <li>{{choice.choice_text}}</li>
+    {% endfor %}
+</ul>
+<ul>
+    <li><a href="{% url 'polls:index' %}"> Back </a></li>
+</ul>
+</body>
+</html>

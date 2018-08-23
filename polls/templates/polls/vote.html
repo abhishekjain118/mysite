@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vote</title>
+</head>
+<body>
+<ul>
+this is Vote html for question #{{key_question.id}}: {{key_question.question_text}}
+</ul>
+<ul>
+    <li><a href="{% url 'polls:index' %}"> Back </a></li>
+</ul>
+</body>
+</html>
