@@ -6,11 +6,19 @@
 </head>
 <body>
 <h1>{{key_question.id}}: {{ key_question.question_text }}</h1>
-<ul>
+
+{% if error_message %} <p><strong> {{ error_message}}</strong></p>{% endif %}
+
+<form action="{%url 'polls:vote' key_question.id %}", method="post">
+    {% csrf_token %}
     {% for choice in key_question.choice_set.all %}
-        <li>{{choice.choice_text}}</li>
+        <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
+        <label for="choice{{forloop.counter}}"> {{ choice.choice_text}} </label>
+    <br>
     {% endfor %}
-</ul>
+    <input type="submit" value="Vote">
+</form>
+
 <ul>
     <li><a href="{% url 'polls:index' %}"> Back </a></li>
 </ul>

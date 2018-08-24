@@ -5,11 +5,17 @@
     <title>Result</title>
 </head>
 <body>
+<h1>{{key_question.id}}: {{ key_question.question_text }}</h1>
+
 <ul>
-this is result html for question# {{key_question.id}}:{{key_question.question_text}}
+{% for choice in key_question.choice_set.all %}
+    <li> {{choice.choice_text}} has {{ choice.votes }} vote{{ choice.votes|pluralize }} </li>
+    {% endfor %}
+
 </ul>
 <ul>
     <li><a href="{% url 'polls:index' %}"> Back </a></li>
+    <li><a href="{% url 'polls:detail' key_question.id %}"> Vote Again </a></li>
 </ul>
 </body>
 </html>

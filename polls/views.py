@@ -1,9 +1,10 @@
-from django.shortcuts import render
 from django.http import HttpResponse # not needed when use render
 from polls.models import Question, Choice
 #from django.template import loader #not needed when use render
 from django.shortcuts import render
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
+from django.urls import reverse
+
 
 # Create your views here.
 def index(request):
@@ -36,6 +37,7 @@ def result(request, question_id):
         question = Question.objects.get(pk=question_id)
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
+
     context = {'key_question': question,}
     return render(request, 'polls/result.html',context)
 
@@ -45,5 +47,19 @@ def vote(request, question_id):
         print(question)
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
-    context = {'key_question': question,}
-    return render(request, 'polls/vote.html',context)
+
+    try:
+        choice_id = request.POST['choice'] #POST['choice'] will have value="{{choice.id}}" of radio input from detail.html page
+        selected_choice = question.choice_set.get(pk=choice_id)
+    except (KeyError, Choice.DoesNotExist):  # Choice object already has DoesNotExist method
+        return render(request, 'polls/detail.html', {
+            'key_question': question,
+            'error_message': "you did not select the choice."
+        })
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        return HttpResponseRedirect(reverse('polls:result', args=(question.id,))) ##args should have iterative, so , is required after question.id
+
+#    context = {'key_question': question,} ## this was for dummy
+#    return render(request, 'polls/vote.html',context) ## this was for dummy
