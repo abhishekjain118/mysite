@@ -1,0 +1,2 @@
+1. add choices in the index.html. add vote button to all question. vote button goes to detail page.
+2. add "view result" button in detail.html page. it should take user to result.html
