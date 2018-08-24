@@ -15,8 +15,11 @@
                 <li> {{ choice.choice_text }} </li>
             {% endfor %}
         </ul>
-
+        <a href="{% url 'polls:detail' question.id%}">
+            <button>Vote</button>
+        </a>
     {% endfor %}
+
     </ul>
 {% else %}
     <p>No polls are available.</p>

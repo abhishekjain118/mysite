@@ -20,7 +20,14 @@
 </form>
 
 <ul>
-    <li><a href="{% url 'polls:index' %}"> Back </a></li>
+    <li>
+        <a href="{% url 'polls:index' %}">
+            <button>Back</button>
+        </a>
+        <a href="{% url 'polls:result' key_question.id%}">
+            <button>View Results</button>
+        </a>
+    </li>
 </ul>
 </body>
 </html>
