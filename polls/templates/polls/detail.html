@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{key_question.id}}</title>
+    <title>{{question.id}}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 </head>
 <body>
-<h1>{{key_question.id}}: {{ key_question.question_text }}</h1>
+<h1>{{question.id}}: {{ question.question_text }}</h1>
 
 {% if error_message %} <p><strong> {{ error_message}}</strong></p>{% endif %}
 
-<form action="{%url 'polls:vote' key_question.id %}", method="post">
+<form action="{%url 'polls:vote' question.id %}", method="post">
     {% csrf_token %}
-    {% for choice in key_question.choice_set.all %}
+    {% for choice in question.choice_set.all %}
         <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
         <label for="choice{{forloop.counter}}"> {{ choice.choice_text}} </label>
     <br>
@@ -24,7 +26,7 @@
         <a href="{% url 'polls:index' %}">
             <button>Back</button>
         </a>
-        <a href="{% url 'polls:result' key_question.id%}">
+        <a href="{% url 'polls:result' question.id%}">
             <button>View Results</button>
         </a>
     </li>
